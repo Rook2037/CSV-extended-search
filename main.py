@@ -8,6 +8,27 @@ st.set_page_config(
     layout="wide"
 )
 
+def show_row_details(row):
+    """選択された行の詳細をモーダルウィンドウで表示"""
+    with st.modal("データ詳細"):
+        st.subheader("選択行の詳細情報")
+        # 2列レイアウトで項目と値を表示
+        for col1, col2 in zip(row.index[::2], row.index[1::2] if len(row.index) > 1 else [None]):
+            cols = st.columns(2)
+            with cols[0]:
+                st.markdown(f"**{col1}:**")
+                st.write(row[col1])
+            if col2:  # 2列目のデータがある場合のみ表示
+                with cols[1]:
+                    st.markdown(f"**{col2}:**")
+                    st.write(row[col2])
+
+        # 奇数個の列がある場合、最後の列を別途表示
+        if len(row.index) % 2 != 0 and len(row.index) > 1:
+            last_col = row.index[-1]
+            st.markdown(f"**{last_col}:**")
+            st.write(row[last_col])
+
 def main():
     st.title("CSV可視化・分析ツール 📊")
 
@@ -68,11 +89,22 @@ def main():
 
             # 結果の表示
             st.header("5. 結果")
-            st.dataframe(
+            st.write("行をクリックすると詳細が表示されます")
+
+            # インタラクティブなデータフレームの表示
+            selected_indices = st.data_editor(
                 filtered_df,
                 use_container_width=True,
-                height=400
+                height=400,
+                hide_index=True,
+                disabled=True,
+                key='data_editor'
             )
+
+            # 選択された行の詳細表示
+            if selected_indices is not None and len(selected_indices) > 0:
+                selected_row = filtered_df.iloc[selected_indices['edited_rows']]
+                show_row_details(selected_row)
 
             # フィルター済みデータのダウンロード
             st.download_button(
