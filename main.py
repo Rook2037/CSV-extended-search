@@ -69,19 +69,9 @@ def main():
                 default=list(df.columns)
             )
 
-            # ソートオプション
-            st.subheader("データの並び替え")
-            sort_column = st.selectbox("並び替えの基準となる列", options=["なし"] + list(df.columns))
-            sort_order = st.radio("並び順", options=["昇順", "降順"])
 
             # フィルターとソートの適用
             filtered_df = df[columns_to_display]
-
-            if sort_column != "なし":
-                filtered_df = filtered_df.sort_values(
-                    by=sort_column,
-                    ascending=(sort_order == "昇順")
-                )
 
             # 検索条件の適用
             if search_terms:
