@@ -89,16 +89,18 @@ def main():
 
             # 結果の表示
             st.header("5. 結果")
-            st.write("行をクリックして詳細を表示できます")
+            st.write("行をクリックすると詳細を表示できます")
 
             if not filtered_df.empty:
                 # データフレームの表示とチェックボックス付きの行選択
+                filtered_df_with_selection = filtered_df.copy()
+                filtered_df_with_selection.insert(0, '_selected', False)
+
                 edited_df = st.data_editor(
-                    filtered_df,
+                    filtered_df_with_selection,
                     use_container_width=True,
                     height=400,
                     hide_index=True,
-                    disabled=True,
                     column_config={
                         "_selected": st.column_config.CheckboxColumn(
                             "選択",
@@ -114,7 +116,8 @@ def main():
                     selected_rows = edited_df[edited_df['_selected']]
                     if not selected_rows.empty:
                         for _, row in selected_rows.iterrows():
-                            show_row_details(row)
+                            row_without_selection = row.drop('_selected')
+                            show_row_details(row_without_selection)
 
             # フィルター済みデータのダウンロード
             st.download_button(
