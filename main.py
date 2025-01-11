@@ -91,20 +91,27 @@ def main():
             st.header("5. 結果")
             st.write("行をクリックすると詳細が表示されます")
 
-            # インタラクティブなデータフレームの表示
-            selected_indices = st.data_editor(
-                filtered_df,
-                use_container_width=True,
-                height=400,
-                hide_index=True,
-                disabled=True,
-                key='data_editor'
-            )
+            # 選択可能なデータフレームの表示
+            if not filtered_df.empty:
+                selected_row_index = st.selectbox(
+                    "行を選択してください",
+                    options=range(len(filtered_df)),
+                    format_func=lambda x: f"行 {x+1}",
+                    key="row_selector"
+                )
 
-            # 選択された行の詳細表示
-            if selected_indices is not None and len(selected_indices) > 0:
-                selected_row = filtered_df.iloc[selected_indices['edited_rows']]
-                show_row_details(selected_row)
+                # データフレームの表示
+                st.dataframe(
+                    filtered_df,
+                    use_container_width=True,
+                    height=400,
+                    hide_index=True
+                )
+
+                # 選択された行の詳細表示
+                if st.button("選択した行の詳細を表示"):
+                    selected_row = filtered_df.iloc[selected_row_index]
+                    show_row_details(selected_row)
 
             # フィルター済みデータのダウンロード
             st.download_button(
