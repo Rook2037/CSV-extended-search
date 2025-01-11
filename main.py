@@ -9,25 +9,25 @@ st.set_page_config(
 )
 
 def show_row_details(row):
-    """選択された行の詳細をモーダルウィンドウで表示"""
-    with st.modal("データ詳細"):
+    """選択された行の詳細を表示"""
+    with st.expander("データ詳細", expanded=True):
         st.subheader("選択行の詳細情報")
         # 2列レイアウトで項目と値を表示
         for col1, col2 in zip(row.index[::2], row.index[1::2] if len(row.index) > 1 else [None]):
             cols = st.columns(2)
             with cols[0]:
                 st.markdown(f"**{col1}:**")
-                st.write(row[col1])
+                st.write(str(row[col1]))
             if col2:  # 2列目のデータがある場合のみ表示
                 with cols[1]:
                     st.markdown(f"**{col2}:**")
-                    st.write(row[col2])
+                    st.write(str(row[col2]))
 
         # 奇数個の列がある場合、最後の列を別途表示
         if len(row.index) % 2 != 0 and len(row.index) > 1:
             last_col = row.index[-1]
             st.markdown(f"**{last_col}:**")
-            st.write(row[last_col])
+            st.write(str(row[last_col]))
 
 def main():
     st.title("CSV可視化・分析ツール 📊")
@@ -89,7 +89,7 @@ def main():
 
             # 結果の表示
             st.header("5. 結果")
-            st.write("行をクリックすると詳細が表示されます")
+            st.write("行を選択して詳細を表示できます")
 
             # 選択可能なデータフレームの表示
             if not filtered_df.empty:
@@ -110,8 +110,11 @@ def main():
 
                 # 選択された行の詳細表示
                 if st.button("選択した行の詳細を表示"):
-                    selected_row = filtered_df.iloc[selected_row_index]
-                    show_row_details(selected_row)
+                    try:
+                        selected_row = filtered_df.iloc[selected_row_index]
+                        show_row_details(selected_row)
+                    except Exception as e:
+                        st.error(f"行の詳細表示中にエラーが発生しました: {str(e)}")
 
             # フィルター済みデータのダウンロード
             st.download_button(
