@@ -89,32 +89,32 @@ def main():
 
             # 結果の表示
             st.header("5. 結果")
-            st.write("行を選択して詳細を表示できます")
+            st.write("行をクリックして詳細を表示できます")
 
-            # 選択可能なデータフレームの表示
             if not filtered_df.empty:
-                selected_row_index = st.selectbox(
-                    "行を選択してください",
-                    options=range(len(filtered_df)),
-                    format_func=lambda x: f"行 {x+1}",
-                    key="row_selector"
-                )
-
-                # データフレームの表示
-                st.dataframe(
+                # データフレームの表示とチェックボックス付きの行選択
+                edited_df = st.data_editor(
                     filtered_df,
                     use_container_width=True,
                     height=400,
-                    hide_index=True
+                    hide_index=True,
+                    disabled=True,
+                    column_config={
+                        "_selected": st.column_config.CheckboxColumn(
+                            "選択",
+                            help="詳細を表示する行を選択",
+                            default=False,
+                        )
+                    },
+                    key='data_editor'
                 )
 
                 # 選択された行の詳細表示
-                if st.button("選択した行の詳細を表示"):
-                    try:
-                        selected_row = filtered_df.iloc[selected_row_index]
-                        show_row_details(selected_row)
-                    except Exception as e:
-                        st.error(f"行の詳細表示中にエラーが発生しました: {str(e)}")
+                if edited_df is not None:
+                    selected_rows = edited_df[edited_df['_selected']]
+                    if not selected_rows.empty:
+                        for _, row in selected_rows.iterrows():
+                            show_row_details(row)
 
             # フィルター済みデータのダウンロード
             st.download_button(
