@@ -1,0 +1,76 @@
+
+[     UTC     ] Logs for csv-extended-search.streamlit.app/
+────────────────────────────────────────────────────────────────────────────────────────
+[03:47:00] 🖥 Provisioning machine...
+[03:47:00] 🎛 Preparing system...
+[03:47:00] ⛓ Spinning up manager process...
+[03:47:02] 🚀 Starting up repository: 'csv-extended-search', branch: 'main', main module: 'main.py'
+[03:47:02] 🐙 Cloning repository...
+[03:47:03] 🐙 Cloning into '/mount/src/csv-extended-search'...
+
+[03:47:03] 🐙 Cloned repository!
+[03:47:03] 🐙 Pulling code changes from Github...
+[03:47:04] 📦 Processing dependencies...
+Prepared [2025-01-13 03:47:06.710850] 52 packages[2025-01-13 03:47:06.711123]  [2025-01-13 03:47:06.711354] in 2.26s[2025-01-13 03:47:06.711657] 
+Installed 52 packages in 106ms
+ + altair==5.5.0
+ + attrs==24.3.0
+ + babel==2.16.0
+ + blinker==1.9.0
+ + cachetools==5.5.0
+ + certifi==2024.12.14
+ + charset-normalizer==3.4.1
+ + click==8.1.8
+ + courlan==1.3.2
+ + dateparser==1.2.0
+ + gitdb==4.0.12
+ + gitpython==3.1.44
+ + htmldate==1.9.3
+ + idna==3.10
+ + jinja2==3.1.5
+ + jsonschema==4.23.0
+ + jsonschema-specifications==2024.10.1
+ + justext==3.0.1
+ + lxml==5.3.0
+ + lxml-html-clean==0.4.1
+ + markdown-it-py==3.0.0
+ + markupsafe==3.0.2
+ + mdurl==0.1.2
+ + narwhals==1.21.1
+ + numpy==2.2.1
+ + packaging==24.2
+ + pandas==2.2.3
+ + pillow==[2025-01-13 03:47:06.817058] 11.1.0
+ + protobuf==5.29.3
+ + pyarrow==18.1.0
+ + pydeck==0.9.1
+ + pygments==2.19.1
+ + python-dateutil==2.9.0.post0
+ + pytz==2024.2
+ + referencing==0.35.1
+ + regex==2024.11.6
+ + requests==2.32.3
+ + rich==13.9.4
+ + rpds-py==0.22.3
+ + six==1.17.0
+ + smmap==5.0.2
+ + streamlit==1.41.1
+ + tenacity==9.0.0
+ + tld==0.13
+ + toml==0.10.2
+ + tornado==6.4.2
+ + trafilatura==2.0.0
+ + typing-extensions==4.12.2
+ + tzdata==2024.2
+ + tzlocal==5.2
+ + urllib3==2.3.0
+ + watchdog==6.0.0
+[03:47:07] 🐍 Python dependencies were installed from /mount/src/csv-extended-search/uv.lock using uv-sync.
+[03:47:07] 📦 WARN: More than one requirements file detected in the repository. Available options: uv-sync /mount/src/csv-extended-search/uv.lock, poetry /mount/src/csv-extended-search/pyproject.toml. Used: uv-sync with /mount/src/csv-extended-search/uv.lock
+Check if streamlit is installed
+Streamlit is already installed
+[03:47:08] 📦 Processed dependencies!
+
+
+
+[03:47:11] ❗️ The service has encountered an error while checking the health of the Streamlit app: Get "http://localhost:8501/healthz": dial tcp 127.0.0.1:8501: connect: connection refused
